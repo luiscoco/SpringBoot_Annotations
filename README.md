@@ -30,6 +30,17 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 @RequestMapping: It can be used at the class level to define a base URI for all request mappings in the class and at the method level to define specific request mappings
 
+@GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping: These are specialized versions of @RequestMapping for specific HTTP methods
+
+@PathVariable: this annotation is used to extract values from the URI path
+
+@RequestParam: it is used to extract query parameters from the URL
+
+@CrossOrigin: it is used to enable Cross-Origin Resource Sharing (CORS) on the controller or handler methods
+
+@ConditionalOnProperty: it is used to conditionally enable a bean based on a property value
+
+@Profile: it is used to specify beans that should only be created in certain environments
 
 
 ## 1. @SpringBootApplication
@@ -605,16 +616,19 @@ public class MyEventListener {
         System.out.println("Context Refreshed Event received: " + event);
     }
 }
-22. @Transactional
-This annotation is used to manage transaction boundaries declaratively.
+```
+
+## 22. @Transactional
+
+This annotation is used to manage transaction boundaries declaratively
 
 Explanation:
 
-It ensures that the annotated method or all methods within the annotated class are executed within a transaction.
+It ensures that the annotated method or all methods within the annotated class are executed within a transaction
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -626,16 +640,19 @@ public class MyTransactionalService {
         // Code that requires transaction management
     }
 }
-23. @Cacheable
-This annotation is used to indicate that the result of invoking a method (or all methods in a class) can be cached.
+```
+
+## 23. @Cacheable
+
+This annotation is used to indicate that the result of invoking a method (or all methods in a class) can be cached
 
 Explanation:
 
-It allows caching of method results, which can improve performance by reducing the need to recompute or fetch data repeatedly.
+It allows caching of method results, which can improve performance by reducing the need to recompute or fetch data repeatedly
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -648,16 +665,19 @@ public class MyCacheService {
         return new Item(id, "Cached Item");
     }
 }
-24. @Async
-This annotation is used to indicate that a method should be executed asynchronously.
+```
+
+## 24. @Async
+
+This annotation is used to indicate that a method should be executed asynchronously
 
 Explanation:
 
-It allows the execution of the method to be offloaded to a separate thread, improving the performance and responsiveness of the application.
+It allows the execution of the method to be offloaded to a separate thread, improving the performance and responsiveness of the application
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -669,6 +689,7 @@ public class MyAsyncService {
         System.out.println("Executing task asynchronously");
     }
 }
+```
 
 ## 25. @Conditional
 
@@ -848,5 +869,4 @@ public class MyConditionalBeanConfig {
 }
 ```
 
-These advanced annotations provide powerful ways to manage and control the behavior of Spring Boot applications, enhancing flexibility, scalability, and maintainability.
-
+These advanced annotations provide powerful ways to manage and control the behavior of Spring Boot applications, enhancing flexibility, scalability, and maintainability
