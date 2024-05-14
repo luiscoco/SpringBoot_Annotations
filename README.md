@@ -377,15 +377,15 @@ public class OrderController {
 
 ## 15. @ResponseBody
 
-This annotation is used to bind the method return value to the web response body
+This annotation is used to **bind the method return value to the web response body**
 
 Explanation:
 
-It tells Spring to convert the return value and write it to the HTTP response automatically.
+It tells Spring to convert the return value and write it to the HTTP response automatically
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -398,16 +398,19 @@ public class MessageController {
         return "Hello, World!";
     }
 }
-16. @CrossOrigin
-This annotation is used to enable Cross-Origin Resource Sharing (CORS) on the controller or handler methods.
+```
+
+## 16. @CrossOrigin
+
+This annotation is used to enable **Cross-Origin Resource Sharing (CORS)** on the controller or handler methods
 
 Explanation:
 
-It allows for specifying the allowed origins, headers, methods, and other configurations for cross-origin requests.
+It allows for specifying the allowed origins, headers, methods, and other configurations for cross-origin requests
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -420,16 +423,19 @@ public class ApiController {
         return "Data from server";
     }
 }
-17. @ConditionalOnProperty
-This annotation is used to conditionally enable a bean based on a property value.
+```
+
+## 17. @ConditionalOnProperty
+
+This annotation is used to conditionally enable a bean based on a property value
 
 Explanation:
 
-It controls bean registration by checking if a specific property is present and has a specific value.
+It controls bean registration by checking if a specific property is present and has a specific value
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -443,8 +449,11 @@ public class MyConfiguration {
         return new MyBean();
     }
 }
-18. @Profile
-This annotation is used to indicate that a component is eligible for registration when one or more specified profiles are active.
+```
+
+## 18. @Profile
+
+This annotation is used to indicate that a component is eligible for registration when one or more specified profiles are active
 
 Explanation:
 
@@ -610,16 +619,18 @@ public class MyAsyncService {
         System.out.println("Executing task asynchronously");
     }
 }
-25. @Conditional
-This annotation is used to define custom conditions for bean registration.
+
+## 25. @Conditional
+
+This annotation is used to define custom conditions for bean registration
 
 Explanation:
 
-It provides a way to define custom logic to determine whether a bean should be registered in the Spring context.
+It provides a way to define custom logic to determine whether a bean should be registered in the Spring context
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -645,16 +656,19 @@ public class MyCondition implements Condition {
         return true; // or false based on the condition
     }
 }
-26. @EnableWebSecurity
-This annotation is used to enable Spring Security’s web security support.
+```
+
+## 26. @EnableWebSecurity
+
+This annotation is used to enable Spring Security’s web security support
 
 Explanation:
 
-It indicates that the application should use Spring Security for web security configuration.
+It indicates that the application should use Spring Security for web security configuration
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -674,16 +688,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .httpBasic();
     }
 }
-27. @Profile
-This annotation is used to indicate that a bean is eligible for registration when one or more specified profiles are active.
+```
+
+## 27. @Profile
+
+This annotation is used to indicate that a bean is eligible for registration when one or more specified profiles are active
 
 Explanation:
 
-It allows different beans to be registered based on the active profile, enabling environment-specific configurations.
+It allows different beans to be registered based on the active profile, enabling environment-specific configurations
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -703,6 +720,7 @@ public class MyProfileConfig {
         return new MyBean("Production Bean");
     }
 }
+```
 
 ## 28. @Retryable
 
