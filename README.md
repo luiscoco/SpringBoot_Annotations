@@ -42,6 +42,28 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 @Profile: it is used to specify beans that should only be created in certain environments
 
+@EnableScheduling: 
+
+@EnableAsync:
+
+@EventListener:
+
+@Transactional:
+
+@Cacheable: 
+
+@Async: 
+
+@Conditional:
+
+@EnableWebSecurity:
+
+@Retryable:
+
+
+
+
+
 
 ## 1. @SpringBootApplication
 
