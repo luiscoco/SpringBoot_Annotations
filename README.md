@@ -60,10 +60,9 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 @Retryable:
 
+@Scheduled:
 
-
-
-
+@ConditionalOnMissingBean:
 
 ## 1. @SpringBootApplication
 
