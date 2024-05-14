@@ -235,8 +235,7 @@ It can be used at the class level to define a base URI for all request mappings 
 
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -250,20 +249,27 @@ public class MyApiController {
         return "Hello, World!";
     }
 }
-11. @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping
-These are specialized versions of @RequestMapping for specific HTTP methods.
+```
+
+## 11. @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping
+
+These are specialized versions of @RequestMapping for specific HTTP methods
 
 Explanation:
 
-@GetMapping is used for GET requests.
-@PostMapping is used for POST requests.
-@PutMapping is used for PUT requests.
-@DeleteMapping is used for DELETE requests.
-@PatchMapping is used for PATCH requests.
+**@GetMapping** is used for GET requests
+
+**@PostMapping** is used for POST requests
+
+**@PutMapping** is used for PUT requests
+
+**@DeleteMapping** is used for DELETE requests
+
+**@PatchMapping** is used for PATCH requests
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -294,12 +300,16 @@ public class ItemController {
         // Delete item by id
     }
 }
-12. @PathVariable
-This annotation is used to extract values from the URI path.
+```
+
+## 12. @PathVariable
+
+This annotation is used to extract values from the URI path
 
 Explanation:
 
-It binds the URI template variables to method parameters.
+It binds the URI template variables to method parameters
+
 Code Snippet:
 
 java
