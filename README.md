@@ -6,17 +6,15 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 **SpringBoot Annotations summary**:
 
-**@SpringBootApplication**:
+@SpringBootApplication: to mark the main class of a Spring Boot application
 
-**@Configuration**:
+@RestController: is used to create RESTful web services. It is a combination of @Controller and @ResponseBody
 
-**@EnableAutoConfiguration**:
+@Controller: marks the class as a web controller
 
-**@ComponentScan**:
+@ResponseBody: ensures that the method's return value is written directly to the HTTP response body, rather than being interpreted as a view name
 
-**@Controller**:
 
-**@ResponseBody**:
 
 
 
@@ -69,6 +67,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MyRestController {
     @GetMapping("/hello")
+    public String sayHello() {
+        return "Hello, World!";
+    }
+}
+```
+
+or
+
+```java
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class MyRestController {
+
+    @GetMapping("/hello")
+    @ResponseBody
     public String sayHello() {
         return "Hello, World!";
     }
