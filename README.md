@@ -14,6 +14,12 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 @ResponseBody: ensures that the method's return value is written directly to the HTTP response body, rather than being interpreted as a view name
 
+@Autowired: automatic dependency injection
+
+@Entity: it is used to mark a class as a JPA entity, meaning it is mapped to a database table
+
+@Repository: it is used to indicate that the class is a Data Access Object (DAO)
+
 
 
 
