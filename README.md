@@ -1,19 +1,26 @@
 # SpringBoot: learn annotations with code snippets
 
-Spring Boot offers a variety of annotations to simplify development by providing concise, declarative code to configure and handle various aspects of Spring applications. Here’s a brief summary of the main Spring Boot annotations along with explanations and code snippets for each:
+Spring Boot offers a variety of **annotations** to **simplify development** by providing concise, declarative code to configure and handle various aspects of Spring applications
 
-1. @SpringBootApplication
-This is a convenience annotation that combines @Configuration, @EnableAutoConfiguration, and @ComponentScan. It is used to mark the main class of a Spring Boot application.
+Here’s a brief summary of the main **Spring Boot annotations** along with explanations and code snippets for each:
 
-Explanation:
+## 1. @SpringBootApplication
 
-@Configuration: Indicates that the class can be used by the Spring IoC container as a source of bean definitions.
-@EnableAutoConfiguration: Enables Spring Boot’s auto-configuration mechanism.
-@ComponentScan: Enables component scanning so that the web controller classes and other components you create will be automatically discovered and registered as beans in Spring's application context.
+This is a convenience annotation that combines **@Configuration**, **@EnableAutoConfiguration**, and **@ComponentScan**
+
+It is used to mark the main class of a Spring Boot application
+
+**Explanation**:
+
+**@Configuration**: Indicates that the class can be used by the Spring IoC container as a source of bean definitions
+
+**@EnableAutoConfiguration**: Enables Spring Boot’s auto-configuration mechanism
+
+**@ComponentScan**: Enables component scanning so that the web controller classes and other components you create will be automatically discovered and registered as beans in Spring's application context
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -23,17 +30,23 @@ public class MySpringBootApplication {
         SpringApplication.run(MySpringBootApplication.class, args);
     }
 }
-2. @RestController
-This annotation is a combination of @Controller and @ResponseBody. It is used to create RESTful web services.
+```
 
-Explanation:
+## 2. @RestController
 
-@Controller: Indicates that the class serves the role of a controller.
-@ResponseBody: Indicates that the return value of the methods should be bound to the web response body.
+This annotation is a combination of @Controller and @ResponseBody
+
+It is used to create RESTful web services
+
+**Explanation**:
+
+**@Controller**: Indicates that the class serves the role of a controller
+
+**@ResponseBody**: Indicates that the return value of the methods should be bound to the web response body
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,16 +57,21 @@ public class MyRestController {
         return "Hello, World!";
     }
 }
-3. @Autowired
-This annotation is used for automatic dependency injection. It can be applied to constructors, setter methods, or fields.
+```
+
+## 3. @Autowired
+
+This annotation is used for **automatic dependency injection**
+
+It can be applied to constructors, setter methods, or fields
 
 Explanation:
 
-It allows Spring to resolve and inject collaborating beans into your bean.
+It allows Spring to resolve and inject collaborating beans into your bean
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,17 +86,21 @@ public class MyService {
 
     // Other methods
 }
-4. @Entity
-This annotation is used to mark a class as a JPA entity, meaning it is mapped to a database table.
+```
+
+## 4. @Entity
+
+This annotation is used to mark a class as a **JPA** entity, meaning it is mapped to a database table
 
 Explanation:
 
-It indicates that the class is an entity and is mapped to a database table.
-By default, the table name is the same as the class name.
+It indicates that the class is an entity and is mapped to a database table
+
+By default, the table name is the same as the class name
+
 Code Snippet:
 
-java
-Copy code
+```java
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -90,16 +112,19 @@ public class MyEntity {
 
     // Getters and setters
 }
-5. @Repository
-This annotation is used to indicate that the class is a Data Access Object (DAO).
+```
+
+## 5. @Repository
+
+This annotation is used to indicate that the class is a **Data Access Object (DAO)**
 
 Explanation:
 
-It indicates that the class provides the mechanism for storage, retrieval, search, update, and delete operation on objects.
+It indicates that the class provides the mechanism for storage, retrieval, search, update, and delete operation on objects
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
