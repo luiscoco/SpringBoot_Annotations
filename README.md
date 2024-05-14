@@ -4,7 +4,7 @@ Spring Boot offers a variety of **annotations** to **simplify development** by p
 
 Here’s a brief summary of the main **Spring Boot annotations** along with explanations and code snippets for each:
 
-**SpringBoot Annotations summary**:
+## SpringBoot Annotations summary
 
 @SpringBootApplication: to mark the main class of a Spring Boot application
 
