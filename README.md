@@ -20,8 +20,11 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 @Repository: it is used to indicate that the class is a Data Access Object (DAO)
 
+@Service: it is used to mark a class as a service provider
 
+@Component: it indicates that the class is a Spring component, which can be auto-detected during classpath scanning
 
+@Configuration: it indicates that the class can be used by the Spring IoC container as a source of bean definitions
 
 
 ## 1. @SpringBootApplication
