@@ -34,9 +34,9 @@ public class MySpringBootApplication {
 
 ## 2. @RestController
 
-This annotation is a combination of @Controller and @ResponseBody
+This annotation is a combination of **@Controller** and **@ResponseBody**
 
-It is used to create RESTful web services
+It is used to create **RESTful** web services
 
 **Explanation**:
 
@@ -90,7 +90,7 @@ public class MyService {
 
 ## 4. @Entity
 
-This annotation is used to mark a class as a **JPA** entity, meaning it is mapped to a database table
+This annotation is used to mark a class as a **JPA** entity, meaning it is **mapped to a database table**
 
 Explanation:
 
@@ -120,7 +120,7 @@ This annotation is used to indicate that the class is a **Data Access Object (DA
 
 Explanation:
 
-It indicates that the class provides the mechanism for storage, retrieval, search, update, and delete operation on objects
+It indicates that the class provides the mechanism for **storage**, **retrieval**, **search**, **update**, and **delete** operation on objects
 
 Code Snippet:
 
@@ -132,16 +132,19 @@ import org.springframework.stereotype.Repository;
 public interface MyRepository extends JpaRepository<MyEntity, Long> {
     // Custom query methods can be defined here
 }
-6. @Service
-This annotation is used to mark a class as a service provider.
+```
+
+## 6. @Service
+
+This annotation is used to mark a class as a service provider
 
 Explanation:
 
-It indicates that the class provides some business functionalities and is a service provider.
+It indicates that the class provides some business functionalities and is a service provider
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.stereotype.Service;
 
 @Service
@@ -150,16 +153,19 @@ public class MyService {
         return "Service Layer Message";
     }
 }
-7. @Component
-This is a generic stereotype for any Spring-managed component.
+```
+
+## 7. @Component
+
+This is a generic stereotype for any Spring-managed component
 
 Explanation:
 
-It indicates that the class is a Spring component, which can be auto-detected during classpath scanning.
+It indicates that the class is a Spring component, which can be auto-detected during classpath scanning
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.stereotype.Component;
 
 @Component
@@ -168,15 +174,19 @@ public class MyComponent {
         return "Component Message";
     }
 }
-8. @Configuration
-This annotation indicates that the class has @Bean definition methods.
+```
+
+## 8. @Configuration
+
+This annotation indicates that the class has @Bean definition methods
 
 Explanation:
 
-It indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+It indicates that the class can be used by the Spring IoC container as a source of bean definitions
+
 Code Snippet:
 
-java
+```java
 Copy code
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -188,16 +198,19 @@ public class MyConfiguration {
         return new MyBean();
     }
 }
-9. @Value
-This annotation is used to inject values into fields from a properties file.
+```
+
+## 9. @Value
+
+This annotation is used to inject values into fields from a properties file
 
 Explanation:
 
-It indicates that a field should be injected with a value from a properties file.
+It indicates that a field should be injected with a value from a properties file
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -210,19 +223,16 @@ public class MyComponent {
         return myProperty;
     }
 }
-These annotations are fundamental in building Spring Boot applications, enabling developers to configure and manage their applications efficiently and effectively.
+```
 
-User
-please explain me more springboot annotations
-ChatGPT
-Sure! Here are more Spring Boot annotations along with explanations and code snippets:
+## 10. @RequestMapping
 
-10. @RequestMapping
-This annotation is used to map web requests to specific handler classes or methods.
+This annotation is used to map web requests to specific handler classes or methods
 
 Explanation:
 
-It can be used at the class level to define a base URI for all request mappings in the class and at the method level to define specific request mappings.
+It can be used at the class level to define a base URI for all request mappings in the class and at the method level to define specific request mappings
+
 Code Snippet:
 
 java
@@ -675,16 +685,18 @@ public class MyProfileConfig {
         return new MyBean("Production Bean");
     }
 }
-28. @Retryable
-This annotation is used to automatically retry a failed operation.
+
+## 28. @Retryable
+
+This annotation is used to automatically retry a failed operation
 
 Explanation:
 
-It indicates that a method should be retried in case of a specific exception.
+It indicates that a method should be retried in case of a specific exception
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
@@ -698,16 +710,19 @@ public class MyRetryableService {
         throw new RuntimeException("Operation failed, retrying...");
     }
 }
-29. @Scheduled
-This annotation is used to mark a method to be scheduled at fixed intervals or cron expressions.
+```
+
+## 29. @Scheduled
+
+This annotation is used to mark a method to be scheduled at fixed intervals or cron expressions
 
 Explanation:
 
-It indicates that the method should be executed according to a fixed rate, fixed delay, or cron expression.
+It indicates that the method should be executed according to a fixed rate, fixed delay, or cron expression
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -719,16 +734,19 @@ public class MyScheduledTask {
         System.out.println("Scheduled task executed every 5 seconds");
     }
 }
-30. @ConditionalOnMissingBean
-This annotation is used to conditionally register a bean if a specified bean is not already present.
+```
+
+## 30. @ConditionalOnMissingBean
+
+This annotation is used to conditionally register a bean if a specified bean is not already present
 
 Explanation:
 
-It allows for defining a bean only if another specified bean is missing from the Spring context.
+It allows for defining a bean only if another specified bean is missing from the Spring context
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -742,5 +760,7 @@ public class MyConditionalBeanConfig {
         return new MyBean();
     }
 }
+```
+
 These advanced annotations provide powerful ways to manage and control the behavior of Spring Boot applications, enhancing flexibility, scalability, and maintainability.
 
