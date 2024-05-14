@@ -4,15 +4,21 @@ Spring Boot offers a variety of **annotations** to **simplify development** by p
 
 Here’s a brief summary of the main **Spring Boot annotations** along with explanations and code snippets for each:
 
-**SpringBoot Annotations Summary**
+**SpringBoot Annotations summary**:
 
-@SpringBootApplication
+**@SpringBootApplication**:
 
-@Configuration
+**@Configuration**:
 
-@EnableAutoConfiguration
+**@EnableAutoConfiguration**:
 
-@ComponentScan
+**@ComponentScan**:
+
+**@Controller**:
+
+**@ResponseBody**:
+
+
 
 ## 1. @SpringBootApplication
 
