@@ -26,6 +26,11 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 @Configuration: it indicates that the class can be used by the Spring IoC container as a source of bean definitions
 
+@Value: a field should be injected with a value from a properties file
+
+@RequestMapping: It can be used at the class level to define a base URI for all request mappings in the class and at the method level to define specific request mappings
+
+
 
 ## 1. @SpringBootApplication
 
@@ -498,11 +503,11 @@ This annotation is used to indicate that a component is eligible for registratio
 
 Explanation:
 
-It is used to specify beans that should only be created in certain environments.
+It is used to specify beans that should only be created in certain environments
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -522,16 +527,19 @@ public class MyConfiguration {
         return new MyBean("Production Bean");
     }
 }
-19. @EnableScheduling
-This annotation is used to enable Spring's scheduled task execution capability.
+```
+
+## 19. @EnableScheduling
+
+This annotation is used to enable Spring's scheduled task execution capability
 
 Explanation:
 
-It triggers the scanning of the @Scheduled annotations on any Spring-managed beans.
+It triggers the scanning of the @Scheduled annotations on any Spring-managed beans
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -545,16 +553,19 @@ public class SchedulingConfig {
         System.out.println("Scheduled Task executed every 5 seconds");
     }
 }
-20. @EnableAsync
-This annotation is used to enable Spring's asynchronous method execution capability.
+```
+
+## 20. @EnableAsync
+
+This annotation is used to enable Spring's asynchronous method execution capability
 
 Explanation:
 
-It triggers the scanning of the @Async annotations on any Spring-managed beans.
+It triggers the scanning of the @Async annotations on any Spring-managed beans
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Async;
@@ -568,23 +579,21 @@ public class AsyncConfig {
         System.out.println("Executing task asynchronously");
     }
 }
-These additional annotations further enhance Spring Boot's capabilities, providing powerful tools to manage application configurations, handle web requests, and support various features like scheduling and asynchronous processing.
+```
 
-User
-please explain me more advance annotations
-ChatGPT
-Certainly! Here are some more advanced Spring Boot annotations, each with explanations and code snippets:
+These additional annotations further enhance Spring Boot's capabilities, providing powerful tools to manage application configurations, handle web requests, and support various features like scheduling and asynchronous processing
 
-21. @EventListener
-This annotation is used to mark a method as an event listener, allowing it to handle application events.
+## 21. @EventListener
+
+This annotation is used to mark a method as an event listener, allowing it to handle application events
 
 Explanation:
 
-It listens for specific application events and executes the annotated method when such events are published.
+It listens for specific application events and executes the annotated method when such events are published
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
