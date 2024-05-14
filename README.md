@@ -312,8 +312,7 @@ It binds the URI template variables to method parameters
 
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -325,16 +324,19 @@ public class UserController {
         return "User ID: " + userId;
     }
 }
-13. @RequestParam
-This annotation is used to extract query parameters from the URL.
+```
+
+## 13. @RequestParam
+
+This annotation is used to extract query parameters from the URL
 
 Explanation:
 
-It binds the query string parameters to method parameters.
+It binds the query string parameters to method parameters
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -346,16 +348,19 @@ public class SearchController {
         return "Search query: " + query;
     }
 }
-14. @RequestBody
-This annotation is used to bind the body of the web request to a method parameter.
+```
+
+## 14. @RequestBody
+
+This annotation is used to bind the body of the web request to a method parameter
 
 Explanation:
 
-It is used to convert the body of a POST or PUT request to an object.
+It is used to convert the body of a POST or PUT request to an object
+
 Code Snippet:
 
-java
-Copy code
+```java
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -368,8 +373,11 @@ public class OrderController {
         return order;
     }
 }
-15. @ResponseBody
-This annotation is used to bind the method return value to the web response body.
+```
+
+## 15. @ResponseBody
+
+This annotation is used to bind the method return value to the web response body
 
 Explanation:
 
