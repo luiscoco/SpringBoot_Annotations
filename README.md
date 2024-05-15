@@ -72,11 +72,13 @@ It is used to mark the main class of a Spring Boot application
 
 **Explanation**:
 
-**@Configuration**: Indicates that the class can be used by the Spring IoC container as a source of bean definitions
+**@SpringBootApplication**: This is a convenience annotation that adds:
 
-**@EnableAutoConfiguration**: Enables Spring Boot’s auto-configuration mechanism
+    **@Configuration**: Tags the class as a source of bean definitions for the application context
 
-**@ComponentScan**: Enables component scanning so that the web controller classes and other components you create will be automatically discovered and registered as beans in Spring's application context
+    **@EnableAutoConfiguration**: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings
+
+    **@ComponentScan**: Tells Spring to look for other components, configurations, and services in the specified package, allowing it to find the controllers
 
 Code Snippet:
 
