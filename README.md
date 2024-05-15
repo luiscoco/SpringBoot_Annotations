@@ -74,11 +74,11 @@ It is used to mark the main class of a Spring Boot application
 
 **@SpringBootApplication**: This is a convenience annotation that adds:
 
-    **@Configuration**: Tags the class as a source of bean definitions for the application context
+**@Configuration**: Tags the class as a source of bean definitions for the application context
 
-    **@EnableAutoConfiguration**: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings
+**@EnableAutoConfiguration**: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings
 
-    **@ComponentScan**: Tells Spring to look for other components, configurations, and services in the specified package, allowing it to find the controllers
+**@ComponentScan**: Tells Spring to look for other components, configurations, and services in the specified package, allowing it to find the controllers
 
 Code Snippet:
 
