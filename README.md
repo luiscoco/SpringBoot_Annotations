@@ -60,9 +60,9 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 **@Retryable**: it is used to indicate that a method should be retried automatically if it fails due to a specified exception
 
-**@Scheduled**:
+**@Scheduled**: it  is used to schedule tasks to be executed at fixed intervals or according to a cron expression
 
-**@ConditionalOnMissingBean**:
+**@ConditionalOnMissingBean**: it is used to conditionally include a bean only if a specified bean does not already exist in the Spring application context
 
 ## 1. @SpringBootApplication
 
