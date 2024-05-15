@@ -1109,9 +1109,46 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyScheduledTask {
 
+    // Task with fixed rate of 5 seconds
     @Scheduled(fixedRate = 5000)
     public void performScheduledTask() {
         System.out.println("Scheduled task executed every 5 seconds");
+    }
+
+    // Task with fixed delay of 7 seconds
+    @Scheduled(fixedDelay = 7000)
+    public void performFixedDelayTask() {
+        System.out.println("Scheduled task executed 7 seconds after the previous task finished");
+    }
+
+    // Task with initial delay of 3 seconds and then fixed rate of 10 seconds
+    @Scheduled(initialDelay = 3000, fixedRate = 10000)
+    public void performInitialDelayTask() {
+        System.out.println("Scheduled task executed after initial delay of 3 seconds and then every 10 seconds");
+    }
+
+    // Task with cron expression
+    @Scheduled(cron = "0 * * * * *") // Every minute at the start of the minute
+    public void performCronTask() {
+        System.out.println("Scheduled task executed at the start of every minute");
+    }
+
+    // Task with custom fixed rate from application properties
+    @Scheduled(fixedRateString = "${custom.fixed.rate}")
+    public void performCustomRateTask() {
+        System.out.println("Scheduled task executed at custom rate defined in application properties");
+    }
+
+    // Task with custom fixed delay from application properties
+    @Scheduled(fixedDelayString = "${custom.fixed.delay}")
+    public void performCustomDelayTask() {
+        System.out.println("Scheduled task executed at custom delay defined in application properties");
+    }
+
+    // Task with custom initial delay and fixed rate from application properties
+    @Scheduled(initialDelayString = "${custom.initial.delay}", fixedRateString = "${custom.fixed.rate}")
+    public void performCustomInitialDelayTask() {
+        System.out.println("Scheduled task executed with custom initial delay and rate defined in application properties");
     }
 }
 ```
