@@ -104,6 +104,23 @@ public class DemoApplication {
 }
 ```
 
+```java
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+        System.out.println("Hello World");
+    }
+
+}
+```
+
 ## 2. @RestController
 
 This annotation is a combination of **@Controller** and **@ResponseBody**
