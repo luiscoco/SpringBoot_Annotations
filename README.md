@@ -1233,6 +1233,24 @@ public class MyScheduledTask {
 }
 ```
 
+In this code:
+
+**performFixedDelayTask** runs 7 seconds after the previous task finishes
+
+**performInitialDelayTask** runs first after an initial delay of 3 seconds, then every 10 seconds
+
+**performCronTask** runs at the start of every minute
+
+**performCustomRateTask**, **performCustomDelayTask**, and **performCustomInitialDelayTask** use values defined in the application's properties file
+
+Ensure you have the corresponding properties in your application.properties file if you use the custom scheduled tasks:
+
+```
+custom.fixed.rate=5000
+custom.fixed.delay=7000
+custom.initial.delay=3000
+```
+
 ## 30. @ConditionalOnMissingBean
 
 I'll provide you with a simple Spring Boot application that demonstrates the use of @ConditionalOnMissingBean
