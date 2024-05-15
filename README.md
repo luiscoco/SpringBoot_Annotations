@@ -1014,27 +1014,199 @@ It indicates that the application should use Spring Security for web security co
 
 Code Snippet:
 
+Here's a more realistic example of a Spring Security configuration that integrates with a database for user authentication and authorization
+
+This example assumes you have a database with user details and roles stored in tables
+
+**Database Entities**
+
+First, define the entities representing users and their roles:
+
 ```java
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String username;
+    private String password;
+    private boolean enabled;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "users_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
+
+    // Getters and Setters
+}
+
+@Entity
+public class Role {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
+
+    // Getters and Setters
+}
+```
+
+**Repositories**
+
+Next, create repositories for the entities:
+
+```java
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByUsername(String username);
+}
+
+public interface RoleRepository extends JpaRepository<Role, Long> {
+}
+```
+
+**UserDetailsService Implementation**
+
+Implement UserDetailsService to load user-specific data:
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, grantedAuthorities);
+    }
+}
+```
+
+**Web Security Configuration**
+
+Finally, configure Spring Security with the custom UserDetailsService and other settings:
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .anyRequest().authenticated()
+                .antMatchers("/public/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("USER")
+                .anyRequest().authenticated()
             .and()
-            .formLogin().and()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/home", true)
+            .and()
+            .logout()
+                .permitAll()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+            .and()
             .httpBasic();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
 ```
+
+Explanation
+
+**Entities**
+
+**User**: Represents the user entity with fields for id, username, password, enabled, and a set of roles.
+
+**Role**: Represents the role entity with fields for id and name. It is associated with the User entity.
+
+**Repositories**
+
+**UserRepository**: Provides CRUD operations for the User entity and includes a method to find a user by username
+
+**RoleRepository**: Provides CRUD operations for the Role entity
+
+**CustomUserDetailsService**
+
+Implements UserDetailsService to load user-specific data based on the username
+
+Converts User entity roles to GrantedAuthority objects required by Spring Security
+
+**WebSecurityConfig**
+
+**authorizeRequests()**: Configures URL-based authorization. Public URLs (/public/**) are accessible without authentication, while /admin/** and /user/** URLs are restricted to users with the ADMIN and USER roles, respectively. All other URLs require authentication
+
+**formLogin()**: Configures form-based authentication with a custom login page and a default success URL
+
+**logout()**: Configures logout functionality with a custom logout URL and a logout success URL
+
+**httpBasic()**: Enables HTTP Basic authentication
+
+**configureGlobal()**: Configures global authentication with the custom UserDetailsService and password encoder
+
+This configuration demonstrates a real-world scenario where user details and roles are managed in a database, and Spring Security is configured to handle authentication and authorization based on this data
 
 ## 27. @Profile
 
