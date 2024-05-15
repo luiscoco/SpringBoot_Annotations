@@ -1078,19 +1078,99 @@ Code Snippet:
 
 ```java
 import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MyRetryableService {
 
-    @Retryable(value = RuntimeException.class, maxAttempts = 3, backoff = @Backoff(delay = 2000))
+    // Retryable operation with custom backoff and max attempts
+    @Retryable(
+        value = { RuntimeException.class, CustomException.class },
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 2000, multiplier = 1.5)
+    )
     public void performRetryableOperation() {
+        System.out.println("Attempting operation...");
         // Code that may fail and should be retried
         throw new RuntimeException("Operation failed, retrying...");
     }
+
+    // Retryable operation with fixed delay
+    @Retryable(
+        value = { RuntimeException.class },
+        maxAttempts = 4,
+        backoff = @Backoff(delay = 3000)
+    )
+    public void performFixedDelayRetryableOperation() {
+        System.out.println("Attempting fixed delay operation...");
+        // Code that may fail and should be retried
+        throw new RuntimeException("Operation with fixed delay failed, retrying...");
+    }
+
+    // Retryable operation with exponential backoff
+    @Retryable(
+        value = { RuntimeException.class },
+        maxAttempts = 5,
+        backoff = @Backoff(delay = 1000, multiplier = 2)
+    )
+    public void performExponentialBackoffRetryableOperation() {
+        System.out.println("Attempting exponential backoff operation...");
+        // Code that may fail and should be retried
+        throw new RuntimeException("Operation with exponential backoff failed, retrying...");
+    }
+
+    // Recover method to handle failures after retries are exhausted
+    @Recover
+    public void recover(RuntimeException e) {
+        System.out.println("Recovery method called after retries are exhausted: " + e.getMessage());
+    }
+
+    // Retryable operation with a custom exception
+    @Retryable(
+        value = { CustomException.class },
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 2000)
+    )
+    public void performCustomExceptionRetryableOperation() throws CustomException {
+        System.out.println("Attempting custom exception operation...");
+        // Code that may fail and should be retried
+        throw new CustomException("Custom exception operation failed, retrying...");
+    }
+
+    // Recover method for custom exception
+    @Recover
+    public void recover(CustomException e) {
+        System.out.println("Recovery method called for custom exception: " + e.getMessage());
+    }
+
+    // Custom exception class
+    public static class CustomException extends Exception {
+        public CustomException(String message) {
+            super(message);
+        }
+    }
 }
 ```
+
+In this code:
+
+**performRetryableOperation**: Retries the operation up to 3 times with an initial delay of 2000 milliseconds, and each subsequent delay is multiplied by 1.5.
+
+**performFixedDelayRetryableOperation**: Retries the operation up to 4 times with a fixed delay of 3000 milliseconds between attempts
+
+**performExponentialBackoffRetryableOperation**: Retries the operation up to 5 times with an initial delay of 1000 milliseconds, and each subsequent delay is multiplied by 2 (exponential backoff)
+
+**recover(RuntimeException e)**: A recovery method that is called if all retries are exhausted for operations throwing RuntimeException
+
+**performCustomExceptionRetryableOperation**: Retries the operation up to 3 times with a delay of 2000 milliseconds for CustomException
+
+**recover(CustomException e)**: A recovery method that is called if all retries are exhausted for operations throwing CustomException
+
+**CustomException**: A custom exception class used for demonstration
+
+This comprehensive example demonstrates how to configure retryable operations with different backoff strategies, max attempts, and recovery methods
 
 ## 29. @Scheduled
 
