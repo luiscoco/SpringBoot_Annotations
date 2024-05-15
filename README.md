@@ -950,19 +950,185 @@ It allows the execution of the method to be offloaded to a separate thread, impr
 
 Code Snippet:
 
+**1. Application Configuration**
+
+First, you need to enable asynchronous processing by annotating a configuration class with @EnableAsync
+
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+
+@Configuration
+@EnableAsync
+public class AsyncConfig {
+}
+```
+
+**2. Custom Executor Configuration**
+
+To configure a custom thread pool executor, you can define a bean in your configuration class
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.util.concurrent.Executor;
+
+@Configuration
+@EnableAsync
+public class AsyncConfig {
+
+    @Bean(name = "customExecutor")
+    public Executor customExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(100);
+        executor.setThreadNamePrefix("AsyncExecutor-");
+        executor.initialize();
+        return executor;
+    }
+}
+```
+
+**3. Service with Asynchronous Methods**
+
+Next, let's define a service with multiple asynchronous methods, including error handling and using the custom executor
+
 ```java
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.Future;
 
 @Service
 public class MyAsyncService {
 
+    // Default executor
     @Async
     public void performAsyncTask() {
-        System.out.println("Executing task asynchronously");
+        System.out.println("Executing task asynchronously: " + Thread.currentThread().getName());
+    }
+
+    // Custom executor
+    @Async("customExecutor")
+    public void performAsyncTaskWithCustomExecutor() {
+        System.out.println("Executing task asynchronously with custom executor: " + Thread.currentThread().getName());
+    }
+
+    // Async method with return value
+    @Async
+    public Future<String> performAsyncTaskWithReturnValue() {
+        System.out.println("Executing task asynchronously with return value: " + Thread.currentThread().getName());
+        try {
+            Thread.sleep(2000); // Simulate delay
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        return new AsyncResult<>("Task Completed");
+    }
+
+    // Async method with exception handling
+    @Async
+    public void performAsyncTaskWithExceptionHandling() {
+        System.out.println("Executing task asynchronously with exception handling: " + Thread.currentThread().getName());
+        try {
+            throw new RuntimeException("Simulated Exception");
+        } catch (Exception e) {
+            System.out.println("Exception caught in async method: " + e.getMessage());
+        }
     }
 }
 ```
+
+**4. Calling Asynchronous Methods**
+
+You can call these asynchronous methods from any other Spring-managed bean, such as a controller or another service
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+@RestController
+public class MyController {
+
+    @Autowired
+    private MyAsyncService myAsyncService;
+
+    @GetMapping("/async-task")
+    public String executeAsyncTask() {
+        myAsyncService.performAsyncTask();
+        return "Async task initiated";
+    }
+
+    @GetMapping("/async-task-custom")
+    public String executeAsyncTaskWithCustomExecutor() {
+        myAsyncService.performAsyncTaskWithCustomExecutor();
+        return "Async task with custom executor initiated";
+    }
+
+    @GetMapping("/async-task-return")
+    public String executeAsyncTaskWithReturnValue() throws ExecutionException, InterruptedException {
+        Future<String> result = myAsyncService.performAsyncTaskWithReturnValue();
+        return "Async task result: " + result.get(); // Blocking call to get the result
+    }
+
+    @GetMapping("/async-task-exception")
+    public String executeAsyncTaskWithExceptionHandling() {
+        myAsyncService.performAsyncTaskWithExceptionHandling();
+        return "Async task with exception handling initiated";
+    }
+}
+```
+
+**Explanation**
+
+**1. Application Configuration**
+
+**@EnableAsync**: Enables Spring's asynchronous method execution capability, allowing the @Async annotation to work
+
+**2. Custom Executor Configuration**
+
+**ThreadPoolTaskExecutor**: Configures a custom thread pool executor with core pool size, maximum pool size, and queue capacity. This helps in managing the threads for asynchronous tasks efficiently
+
+**customExecutor()**: Defines a bean named customExecutor for the custom thread pool
+
+**3. Service with Asynchronous Methods**
+
+**@Async**: Marks the method to be executed asynchronously. Spring will run this method in a separate thread
+
+**performAsyncTask()**: A simple asynchronous method using the default executor
+
+**performAsyncTaskWithCustomExecutor()**: Uses the custom executor defined earlier
+
+**performAsyncTaskWithReturnValue()**: Returns a Future object, allowing you to retrieve the result of the asynchronous computation
+
+**performAsyncTaskWithExceptionHandling()**: Demonstrates how to handle exceptions within an asynchronous method
+
+**4. Calling Asynchronous Methods**
+
+**executeAsyncTask()**: Calls the simple asynchronous method
+
+**executeAsyncTaskWithCustomExecutor()**: Calls the asynchronous method using the custom executor
+
+**executeAsyncTaskWithReturnValue()**: Calls the asynchronous method that returns a Future and blocks to get the result
+
+**executeAsyncTaskWithExceptionHandling()**: Calls the asynchronous method with exception handling
+
+**Summary**
+
+This example demonstrates how to use Spring's asynchronous capabilities effectively
+
+It shows how to define asynchronous methods, configure custom executors, handle return values, and manage exceptions within asynchronous methods
+
+By doing so, you can make your application more responsive and efficient, especially when dealing with long-running tasks
 
 ## 25. @Conditional
 
