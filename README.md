@@ -42,23 +42,23 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 @Profile: it is used to specify beans that should only be created in certain environments
 
-@EnableScheduling: 
+@EnableScheduling: it is used to enable Spring's scheduled task execution capability
 
-@EnableAsync:
+@EnableAsync: it is used to enable Spring's asynchronous method execution capability
 
-@EventListener:
+@EventListener: it is used to mark a method as a listener for application events
 
-@Transactional:
+@Transactional: it is used to manage transaction boundaries in a declarative manner
 
-@Cacheable: 
+@Cacheable: it is used to indicate that the result of a method can be cached
 
-@Async: 
+@Async: it is used to indicate that a method should be executed asynchronously
 
-@Conditional:
+@Conditional: it is used to conditionally include or exclude beans, configurations, or other components based on specific criteria
 
-@EnableWebSecurity:
+@EnableWebSecurity: it is used to enable Spring Security's web security support and provide the Spring MVC integration
 
-@Retryable:
+@Retryable: it is used to indicate that a method should be retried automatically if it fails due to a specified exception
 
 @Scheduled:
 
