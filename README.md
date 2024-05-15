@@ -236,43 +236,140 @@ public class GreetingController {
 
 This annotation is used to mark a class as a **JPA** entity, meaning it is **mapped to a database table**
 
-Explanation:
+Below is a simple Spring Boot application that demonstrates the use of @Entity to map a Java class to a database table using **JPA (Java Persistence API)**
 
-It indicates that the class is an entity and is mapped to a database table
-
-By default, the table name is the same as the class name
+This application includes an entity, a repository, a service, and a controller to illustrate how to work with a database in a Spring Boot application
 
 Code Snippet:
 
 ```java
-import javax.persistence.Entity;
-import javax.persistence.Id;
+package com.example;
 
-@Entity
-public class MyEntity {
-    @Id
-    private Long id;
-    private String name;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-    // Getters and setters
+@SpringBootApplication
+public class SpringBootEntityApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootEntityApplication.class, args);
+    }
 }
 ```
 
-**AnnotationConfigApplicationContext context**: This line creates an instance of AnnotationConfigApplicationContext, which is a Spring context container designed to work with Java-based configuration
+```java
+package com.example.entity;
 
-**context.scan("com.example.demo")**: This tells the Spring container to scan the com.example.demo package for classes annotated with Spring annotations (like @Component, @Service, etc.)
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-It is used to detect and register Spring-managed beans
+@Entity
+public class User {
 
-**context.refresh()**: This initializes the Spring context. It processes the scanned classes, creates and configures beans, and prepares the application for use
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
 
-**context.getBean(MyServiceClass.class)**: This line retrieves a bean of type MyServiceClass from the Spring context
+    // Getters and setters
 
-It assumes that MyServiceClass is a Spring-managed bean, annotated with @Component, @Service, or similar
+    public Long getId() {
+        return id;
+    }
 
-**context.close()**: Closes the Spring application context, releasing all resources and locks that it holds
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-This is a good practice to ensure that resources are properly cleaned up when the application is done
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+```
+
+```java
+package com.example.repository;
+
+import com.example.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+}
+```
+
+```java
+package com.example.service;
+
+import com.example.entity.User;
+import com.example.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+}
+```
+
+```java
+package com.example.controller;
+
+import com.example.entity.User;
+import com.example.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+public class UserController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @PostMapping("/users")
+    public User createUser(@RequestBody User user) {
+        return userService.saveUser(user);
+    }
+}
+```
 
 ## 5. @Repository
 
@@ -371,6 +468,22 @@ public class DemoApplication {
     }
 }
 ```
+
+**AnnotationConfigApplicationContext context**: This line creates an instance of AnnotationConfigApplicationContext, which is a Spring context container designed to work with Java-based configuration
+
+**context.scan("com.example.demo")**: This tells the Spring container to scan the com.example.demo package for classes annotated with Spring annotations (like @Component, @Service, etc.)
+
+It is used to detect and register Spring-managed beans
+
+**context.refresh()**: This initializes the Spring context. It processes the scanned classes, creates and configures beans, and prepares the application for use
+
+**context.getBean(MyServiceClass.class)**: This line retrieves a bean of type MyServiceClass from the Spring context
+
+It assumes that MyServiceClass is a Spring-managed bean, annotated with @Component, @Service, or similar
+
+**context.close()**: Closes the Spring application context, releasing all resources and locks that it holds
+
+This is a good practice to ensure that resources are properly cleaned up when the application is done
 
 ## 7. @Component
 
