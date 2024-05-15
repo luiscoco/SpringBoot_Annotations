@@ -1118,28 +1118,125 @@ public class MyScheduledTask {
 
 ## 30. @ConditionalOnMissingBean
 
-This annotation is used to conditionally register a bean if a specified bean is not already present
+I'll provide you with a simple Spring Boot application that demonstrates the use of @ConditionalOnMissingBean
+ 
+This annotation is used to conditionally create a bean if a bean of the same type or name is not already present in the application context
 
-Explanation:
+Here's an example Spring Boot application:
 
-It allows for defining a bean only if another specified bean is missing from the Spring context
+**Create a Spring Boot Project**:
 
-Code Snippet:
+You can create a new Spring Boot project using **Spring Initializr (https://start.spring.io/)**
+
+Choose your preferred build tool (**Maven** or **Gradle**), and add the necessary dependencies such as **Spring Web**
+
+**Application.java**
 
 ```java
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.context.annotation.Configuration;
+package com.example.demo;
 
-@Configuration
-public class MyConditionalBeanConfig {
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-    @Bean
-    @ConditionalOnMissingBean(MyBean.class)
-    public MyBean myBean() {
-        return new MyBean();
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
     }
 }
 ```
+
+**Create Service Interfaces and Implementations**:
+
+**MyService.java**
+
+```java
+package com.example.demo.service;
+
+public interface MyService {
+    String serve();
+}
+```
+
+**DefaultService.java**
+
+```java
+package com.example.demo.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class DefaultService implements MyService {
+    @Override
+    public String serve() {
+        return "Default Service";
+    }
+}
+```
+
+**CustomService.java**
+
+```java
+package com.example.demo.service;
+
+import org.springframework.context.annotation.Conditional;
+import org.springframework.stereotype.Service;
+
+@Service
+@ConditionalOnMissingBean(MyService.class)
+public class CustomService implements MyService {
+    @Override
+    public String serve() {
+        return "Custom Service";
+    }
+}
+```
+
+**Create a Controller to Test the Services**:
+
+**MyController.java**
+
+```java
+package com.example.demo.controller;
+
+import com.example.demo.service.MyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MyController {
+
+    private final MyService myService;
+
+    @Autowired
+    public MyController(MyService myService) {
+        this.myService = myService;
+    }
+
+    @GetMapping("/serve")
+    public String serve() {
+        return myService.serve();
+    }
+}
+```
+
+**Run the Application**:
+
+Run your Spring Boot application. If there is no other bean of type MyService defined, CustomService will be used. Otherwise, DefaultService will be used.
+
+**Test the Application**:
+
+Access http://localhost:8080/serve to see which service is being used.
+
+**Explanation**:
+
+@ConditionalOnMissingBean on CustomService ensures that this bean will only be created if there is no other bean of type MyService in the application context
+
+In this setup, DefaultService will be created and used because it is not conditional
+
+If you comment out or remove the DefaultService bean, CustomService will be used
+
+This example demonstrates how you can use @ConditionalOnMissingBean to conditionally define beans in a Spring Boot application
 
 These advanced annotations provide powerful ways to manage and control the behavior of Spring Boot applications, enhancing flexibility, scalability, and maintainability
