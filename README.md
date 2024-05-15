@@ -181,19 +181,69 @@ It allows Spring to resolve and inject collaborating beans into your bean
 Code Snippet:
 
 ```java
-import org.springframework.beans.factory.annotation.Autowired;
+// Java Program to Illustrate MyServiceClass
+ 
+// Importing package module to code module
+package com.example.demo.service;
+// Importing required classes
 import org.springframework.stereotype.Service;
-
+ 
+// Annotation
 @Service
-public class MyService {
-    private final MyRepository myRepository;
-
-    @Autowired
-    public MyService(MyRepository myRepository) {
-        this.myRepository = myRepository;
+ 
+// Class
+public class MyServiceClass {
+ 
+    // Method
+    // To compute factorial
+    public int factorial(int n)
+    {
+        // Base case
+        if (n == 0)
+            return 1;
+ 
+        return n * factorial(n - 1);
     }
+}
 
-    // Other methods
+
+// Java Program to Illustrate DemoApplication
+ 
+// Importing package module to code fragment
+package com.example.demo;
+// Importing required classes
+import com.example.demo.service.MyServiceClass;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+ 
+// Annotation
+@SpringBootApplication
+ 
+// Main class
+public class DemoApplication {
+ 
+    // MAin driver method
+    public static void main(String[] args)
+    {
+ 
+        AnnotationConfigApplicationContext context
+            = new AnnotationConfigApplicationContext();
+        context.scan("com.example.demo");
+ 
+        context.refresh();
+ 
+        MyServiceClass myServiceClass
+            = context.getBean(MyServiceClass.class);
+ 
+        // Testing the factorial method
+        int factorialOf5 = myServiceClass.factorial(5);
+        System.out.println("Factorial of 5 is: "
+                           + factorialOf5);
+ 
+        // Closing the spring context
+        // using close() method
+        context.close();
+    }
 }
 ```
 
