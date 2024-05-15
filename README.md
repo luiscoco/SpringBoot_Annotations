@@ -275,6 +275,22 @@ public class MyEntity {
 }
 ```
 
+**AnnotationConfigApplicationContext context**: This line creates an instance of AnnotationConfigApplicationContext, which is a Spring context container designed to work with Java-based configuration
+
+**context.scan("com.example.demo")**: This tells the Spring container to scan the com.example.demo package for classes annotated with Spring annotations (like @Component, @Service, etc.)
+
+It is used to detect and register Spring-managed beans
+
+**context.refresh()**: This initializes the Spring context. It processes the scanned classes, creates and configures beans, and prepares the application for use
+
+**context.getBean(MyServiceClass.class)**: This line retrieves a bean of type MyServiceClass from the Spring context
+
+It assumes that MyServiceClass is a Spring-managed bean, annotated with @Component, @Service, or similar
+
+**context.close()**: Closes the Spring application context, releasing all resources and locks that it holds
+
+This is a good practice to ensure that resources are properly cleaned up when the application is done
+
 ## 5. @Repository
 
 This annotation is used to indicate that the class is a **Data Access Object (DAO)**
