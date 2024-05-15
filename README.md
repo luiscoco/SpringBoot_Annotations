@@ -1052,19 +1052,88 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class MyProfileConfig {
 
+    // Bean definition for the "dev" profile
     @Bean
     @Profile("dev")
     public MyBean devBean() {
         return new MyBean("Development Bean");
     }
 
+    // Bean definition for the "prod" profile
     @Bean
     @Profile("prod")
     public MyBean prodBean() {
         return new MyBean("Production Bean");
     }
+
+    // Bean definition for the "test" profile
+    @Bean
+    @Profile("test")
+    public MyBean testBean() {
+        return new MyBean("Test Bean");
+    }
+    
+    // Bean definition for both "dev" and "qa" profiles
+    @Bean
+    @Profile({"dev", "qa"})
+    public MyBean devQaBean() {
+        return new MyBean("Development and QA Bean");
+    }
+    
+    // Bean definition for "default" profile
+    @Bean
+    @Profile("default")
+    public MyBean defaultBean() {
+        return new MyBean("Default Bean");
+    }
+}
+
+class MyBean {
+    private String name;
+
+    public MyBean(String name) {
+        this.name = name;
+    }
+
+    // Getter and Setter methods
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "MyBean{name='" + name + '\'' + '}';
+    }
 }
 ```
+
+**Activating Profiles**
+
+To activate a specific profile, you can use the spring.profiles.active property. This can be set in several ways:
+
+In the **application.properties** file:
+
+```
+spring.profiles.active=dev
+```
+
+As a command-line argument:
+
+```
+java -jar myapp.jar --spring.profiles.active=prod
+```
+
+As an environment variable:
+
+```
+export SPRING_PROFILES_ACTIVE=test
+```
+
+Using profiles allows you to create and configure beans specifically tailored for different environments, making your application more flexible and easier to manage
 
 ## 28. @Retryable
 
