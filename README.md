@@ -925,7 +925,44 @@ It allows caching of method results, which can improve performance by reducing t
 
 Code Snippet:
 
+**Introduction to Caching with Spring**
+
+Spring provides a robust caching abstraction, allowing you to store and retrieve data from a variety of caching solutions such as EhCache, Hazelcast, Infinispan, Redis, etc
+
+Caching helps **improve performance** by temporarily storing the results of expensive operations and serving these results from the cache
+
+**1. Cache Configuration**
+
+First, configure caching in your Spring application. You can use an in-memory cache manager for simplicity
+
 ```java
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@EnableCaching
+public class CacheConfig {
+
+    @Bean
+    public ConcurrentMapCacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("items");
+    }
+}
+```
+
+**@EnableCaching**: Enables Spring's annotation-driven cache management capability
+
+**ConcurrentMapCacheManager**: A simple cache manager backed by a concurrent map. It manages caches with the names you specify (in this case, "items")
+
+**2. Service with Caching Operations**
+
+Define a service that demonstrates different caching operations like caching, updating, and evicting cache entries
+
+```java
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -934,11 +971,170 @@ public class MyCacheService {
 
     @Cacheable("items")
     public Item getItemById(Long id) {
-        // Code to retrieve item by id
+        // Simulate a time-consuming operation, e.g., database call
+        simulateSlowService();
         return new Item(id, "Cached Item");
+    }
+
+    @CachePut(value = "items", key = "#item.id")
+    public Item updateItem(Item item) {
+        // Simulate a database update
+        return item;
+    }
+
+    @CacheEvict(value = "items", key = "#id")
+    public void deleteItem(Long id) {
+        // Simulate a database delete
+    }
+
+    @CacheEvict(value = "items", allEntries = true)
+    public void clearCache() {
+        // This method will remove all cache entries
+    }
+
+    private void simulateSlowService() {
+        try {
+            Thread.sleep(3000L); // Simulate delay
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(e);
+        }
+    }
+}
+
+class Item {
+    private Long id;
+    private String name;
+
+    // Constructor, getters, setters
+
+    public Item(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{id=" + id + ", name='" + name + '\'' + '}';
     }
 }
 ```
+
+**@Cacheable("items")**: Caches the result of the method using the cache named "items". The method will only be executed if the item is not already present in the cache.
+
+**@CachePut(value = "items", key = "#item.id")**: Updates the cache with the new value for the given key. The method will always be executed, and the result will be stored in the cache.
+
+**@CacheEvict(value = "items", key = "#id")**: Removes the specified entry from the cache. The method will delete the item from the cache.
+
+**@CacheEvict(value = "items", allEntries = true)**: Clears all entries from the cache. Useful for cache invalidation scenarios.
+
+**3. Controller to Test Caching**
+
+Create a REST controller to test the caching functionality
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/items")
+public class ItemController {
+
+    @Autowired
+    private MyCacheService myCacheService;
+
+    @GetMapping("/{id}")
+    public Item getItem(@PathVariable Long id) {
+        return myCacheService.getItemById(id);
+    }
+
+    @PutMapping
+    public Item updateItem(@RequestBody Item item) {
+        return myCacheService.updateItem(item);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteItem(@PathVariable Long id) {
+        myCacheService.deleteItem(id);
+    }
+
+    @DeleteMapping("/cache")
+    public void clearCache() {
+        myCacheService.clearCache();
+    }
+}
+```
+
+Explanation
+
+**Cache Configuration**
+
+**CacheConfig**: Configures Spring’s cache management. Using ConcurrentMapCacheManager is suitable for simple, in-memory caching
+
+In a production environment, you would typically use a more robust solution like 
+
+**Redis or EhCache**
+
+Service with Caching Operations
+
+**getItemById(Long id)**: Uses @Cacheable to cache the result of the method. When called, if the result is in the cache, it returns the cached value instead of executing the method
+
+**updateItem(Item item)**: Uses @CachePut to update the cache with the new value of the item. It ensures that the cache is consistent with the underlying data store
+
+**deleteItem(Long id)**: Uses @CacheEvict to remove the item from the cache when it is deleted from the data store
+
+**clearCache()**: Uses @CacheEvict(allEntries = true) to clear all entries from the cache
+
+**Testing the Caching**
+
+ItemController: Provides endpoints to test the caching functionality
+
+GET /items/{id}: Retrieves an item by ID, demonstrating the caching behavior
+
+PUT /items: Updates an item, demonstrating the cache update behavior
+
+DELETE /items/{id}: Deletes an item by ID, demonstrating the cache eviction behavior
+
+DELETE /items/cache: Clears the cache, demonstrating cache invalidation
+
+Running the Example
+
+Start the Spring Boot application
+
+**Access the endpoints**:
+
+GET /items/{id}: First call will take longer due to the simulated delay. Subsequent calls will be faster as the result is retrieved from the cache
+
+PUT /items: Update an item and ensure the cache reflects the updated value
+
+DELETE /items/{id}: Delete an item and ensure it is removed from the cache
+
+DELETE /items/cache: Clear the cache and ensure all entries are invalidated
+
+By integrating caching into your Spring application, you can significantly improve performance for read-heavy operations by reducing the load on the underlying data store and serving frequently requested data from the cache
+
+
+
+
+
+
+
 
 ## 24. @Async
 
