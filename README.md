@@ -6,63 +6,63 @@ Here’s a brief summary of the main **Spring Boot annotations** along with expl
 
 ## SpringBoot Annotations summary
 
-@SpringBootApplication: to mark the main class of a Spring Boot application
+**@SpringBootApplication**: to mark the main class of a Spring Boot application
 
-@RestController: is used to create RESTful web services. It is a combination of @Controller and @ResponseBody
+**@RestController**: is used to create RESTful web services. It is a combination of @Controller and @ResponseBody
 
-@Controller: marks the class as a web controller
+**@Controller**: marks the class as a web controller
 
-@ResponseBody: ensures that the method's return value is written directly to the HTTP response body, rather than being interpreted as a view name
+**@ResponseBody**: ensures that the method's return value is written directly to the HTTP response body, rather than being interpreted as a view name
 
-@Autowired: automatic dependency injection
+**@Autowired**: automatic dependency injection
 
-@Entity: it is used to mark a class as a JPA entity, meaning it is mapped to a database table
+**@Entity**: it is used to mark a class as a JPA entity, meaning it is mapped to a database table
 
-@Repository: it is used to indicate that the class is a Data Access Object (DAO)
+**@Repository**: it is used to indicate that the class is a Data Access Object (DAO)
 
-@Service: it is used to mark a class as a service provider
+**@Service**: it is used to mark a class as a service provider
 
-@Component: it indicates that the class is a Spring component, which can be auto-detected during classpath scanning
+**@Component**: it indicates that the class is a Spring component, which can be auto-detected during classpath scanning
 
-@Configuration: it indicates that the class can be used by the Spring IoC container as a source of bean definitions
+**@Configuration**: it indicates that the class can be used by the Spring IoC container as a source of bean definitions
 
-@Value: a field should be injected with a value from a properties file
+**@Value**: a field should be injected with a value from a properties file
 
-@RequestMapping: It can be used at the class level to define a base URI for all request mappings in the class and at the method level to define specific request mappings
+**@RequestMapping**: It can be used at the class level to define a base URI for all request mappings in the class and at the method level to define specific request mappings
 
-@GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping: These are specialized versions of @RequestMapping for specific HTTP methods
+**@GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping**: These are specialized versions of @RequestMapping for specific HTTP methods
 
-@PathVariable: this annotation is used to extract values from the URI path
+**@PathVariable**: this annotation is used to extract values from the URI path
 
-@RequestParam: it is used to extract query parameters from the URL
+**@RequestParam**: it is used to extract query parameters from the URL
 
-@CrossOrigin: it is used to enable Cross-Origin Resource Sharing (CORS) on the controller or handler methods
+**@CrossOrigin**: it is used to enable Cross-Origin Resource Sharing (CORS) on the controller or handler methods
 
-@ConditionalOnProperty: it is used to conditionally enable a bean based on a property value
+**@ConditionalOnProperty**: it is used to conditionally enable a bean based on a property value
 
-@Profile: it is used to specify beans that should only be created in certain environments
+**@Profile**: it is used to specify beans that should only be created in certain environments
 
-@EnableScheduling: it is used to enable Spring's scheduled task execution capability
+**@EnableScheduling**: it is used to enable Spring's scheduled task execution capability
 
-@EnableAsync: it is used to enable Spring's asynchronous method execution capability
+**@EnableAsync**: it is used to enable Spring's asynchronous method execution capability
 
-@EventListener: it is used to mark a method as a listener for application events
+**@EventListener**: it is used to mark a method as a listener for application events
 
-@Transactional: it is used to manage transaction boundaries in a declarative manner
+**@Transactional**: it is used to manage transaction boundaries in a declarative manner
 
-@Cacheable: it is used to indicate that the result of a method can be cached
+**@Cacheable**: it is used to indicate that the result of a method can be cached
 
-@Async: it is used to indicate that a method should be executed asynchronously
+**@Async**: it is used to indicate that a method should be executed asynchronously
 
-@Conditional: it is used to conditionally include or exclude beans, configurations, or other components based on specific criteria
+**@Conditional**: it is used to conditionally include or exclude beans, configurations, or other components based on specific criteria
 
-@EnableWebSecurity: it is used to enable Spring Security's web security support and provide the Spring MVC integration
+**@EnableWebSecurity**: it is used to enable Spring Security's web security support and provide the Spring MVC integration
 
-@Retryable: it is used to indicate that a method should be retried automatically if it fails due to a specified exception
+**@Retryable**: it is used to indicate that a method should be retried automatically if it fails due to a specified exception
 
-@Scheduled:
+**@Scheduled**:
 
-@ConditionalOnMissingBean:
+**@ConditionalOnMissingBean**:
 
 ## 1. @SpringBootApplication
 
