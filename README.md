@@ -183,68 +183,51 @@ It allows Spring to resolve and inject collaborating beans into your bean
 Code Snippet:
 
 ```java
-// Java Program to Illustrate MyServiceClass
- 
-// Importing package module to code module
-package com.example.demo.service;
-// Importing required classes
-import org.springframework.stereotype.Service;
- 
-// Annotation
-@Service
- 
-// Class
-public class MyServiceClass {
- 
-    // Method
-    // To compute factorial
-    public int factorial(int n)
-    {
-        // Base case
-        if (n == 0)
-            return 1;
- 
-        return n * factorial(n - 1);
+package com.example;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringBootAutowiredApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootAutowiredApplication.class, args);
     }
 }
+```
 
+```java
+package com.example.service;
 
-// Java Program to Illustrate DemoApplication
- 
-// Importing package module to code fragment
-package com.example.demo;
-// Importing required classes
-import com.example.demo.service.MyServiceClass;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
- 
-// Annotation
-@SpringBootApplication
- 
-// Main class
-public class DemoApplication {
- 
-    // MAin driver method
-    public static void main(String[] args)
-    {
- 
-        AnnotationConfigApplicationContext context
-            = new AnnotationConfigApplicationContext();
-        context.scan("com.example.demo");
- 
-        context.refresh();
- 
-        MyServiceClass myServiceClass
-            = context.getBean(MyServiceClass.class);
- 
-        // Testing the factorial method
-        int factorialOf5 = myServiceClass.factorial(5);
-        System.out.println("Factorial of 5 is: "
-                           + factorialOf5);
- 
-        // Closing the spring context
-        // using close() method
-        context.close();
+import org.springframework.stereotype.Service;
+
+@Service
+public class GreetingService {
+
+    public String greet() {
+        return "Hello, World!";
+    }
+}
+```
+
+```java
+package com.example.controller;
+
+import com.example.service.GreetingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class GreetingController {
+
+    @Autowired
+    private GreetingService greetingService;
+
+    @GetMapping("/greet")
+    public String greet() {
+        return greetingService.greet();
     }
 }
 ```
@@ -322,12 +305,69 @@ It indicates that the class provides some business functionalities and is a serv
 Code Snippet:
 
 ```java
+// Java Program to Illustrate MyServiceClass
+ 
+// Importing package module to code module
+package com.example.demo.service;
+// Importing required classes
 import org.springframework.stereotype.Service;
-
+ 
+// Annotation
 @Service
-public class MyService {
-    public String getServiceMessage() {
-        return "Service Layer Message";
+ 
+// Class
+public class MyServiceClass {
+ 
+    // Method
+    // To compute factorial
+    public int factorial(int n)
+    {
+        // Base case
+        if (n == 0)
+            return 1;
+ 
+        return n * factorial(n - 1);
+    }
+}
+```
+
+```java
+// Java Program to Illustrate DemoApplication
+ 
+// Importing package module to code fragment
+package com.example.demo;
+// Importing required classes
+import com.example.demo.service.MyServiceClass;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+ 
+// Annotation
+@SpringBootApplication
+ 
+// Main class
+public class DemoApplication {
+ 
+    // MAin driver method
+    public static void main(String[] args)
+    {
+ 
+        AnnotationConfigApplicationContext context
+            = new AnnotationConfigApplicationContext();
+        context.scan("com.example.demo");
+ 
+        context.refresh();
+ 
+        MyServiceClass myServiceClass
+            = context.getBean(MyServiceClass.class);
+ 
+        // Testing the factorial method
+        int factorialOf5 = myServiceClass.factorial(5);
+        System.out.println("Factorial of 5 is: "
+                           + factorialOf5);
+ 
+        // Closing the spring context
+        // using close() method
+        context.close();
     }
 }
 ```
